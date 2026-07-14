@@ -47,3 +47,34 @@ const clearHistoryBtn = document.getElementById("clear-history");
 clearHistoryBtn.addEventListener("click", () => {
   historyList.innerHTML = "";
 });
+
+async function loadCurrencies() {
+  const response = await fetch("https://api.exchangerate.host/latest");
+  const data = await response.json();
+  const currencies = Object.keys(data.rates);
+
+  const fromSelect = document.getElementById("fromCurrency");
+  const toSelect = document.getElementById("toCurrency");
+
+  currencies.forEach(currency => {
+    fromSelect.innerHTML += `<option value="${currency}">${currency}</option>`;
+    toSelect.innerHTML += `<option value="${currency}">${currency}</option>`;
+  });
+
+  fromSelect.value = "USD";
+  toSelect.value = "EUR";
+}
+
+async function convertCurrency() {
+  const amount = document.getElementById("amount").value;
+  const fromCurrency = document.getElementById("fromCurrency").value;
+  const toCurrency = document.getElementById("toCurrency").value;
+
+  const response = await fetch(`https://api.exchangerate.host/convert?from=${fromCurrency}&to=${toCurrency}&amount=${amount}`);
+  const data = await response.json();
+
+  document.getElementById("conversionResult").innerText =
+    `${amount} ${fromCurrency} = ${data.result.toFixed(2)} ${toCurrency}`;
+}
+
+loadCurrencies();
