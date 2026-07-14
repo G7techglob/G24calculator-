@@ -42,3 +42,8 @@ document.addEventListener("keydown", (event) => {
     clearDisplay();
   }
 });
+const clearHistoryBtn = document.getElementById("clear-history");
+
+clearHistoryBtn.addEventListener("click", () => {
+  historyList.innerHTML = "";
+});
