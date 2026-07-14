@@ -1,9 +1,9 @@
 const display = document.getElementById("display");
 const historyList = document.getElementById("history");
-const toggleThemeBtn = document.getElementById("toggle-theme");
 
-function appendValue(value) {
-  display.value += value;
+// Calculator functions
+function appendValue(val) {
+  display.value += val;
 }
 
 function clearDisplay() {
@@ -24,30 +24,47 @@ function calculate() {
   }
 }
 
-// Dark mode toggle
-toggleThemeBtn.addEventListener("click", () => {
-  document.body.classList.toggle("light");
-});
+// Toggle sections
+function toggleHistory() {
+  const historyContainer = document.getElementById("history-container");
+  historyContainer.style.display =
+    historyContainer.style.display === "none" ? "block" : "none";
+}
 
-// Keyboard support
-document.addEventListener("keydown", (event) => {
-  const key = event.key;
-  if (!isNaN(key) || "+-*/.".includes(key)) {
-    appendValue(key);
-  } else if (key === "Enter") {
-    calculate();
-  } else if (key === "Backspace") {
-    deleteLast();
-  } else if (key === "Escape") {
-    clearDisplay();
-  }
-});
+function toggleCurrency() {
+  const currencyContainer = document.getElementById("currency-container");
+  currencyContainer.style.display =
+    currencyContainer.style.display === "none" ? "block" : "none";
+}
+
+// Clear history
 const clearHistoryBtn = document.getElementById("clear-history");
-
 clearHistoryBtn.addEventListener("click", () => {
   historyList.innerHTML = "";
 });
 
+// Currency names
+const currencyNames = {
+  USD: "United States Dollar 🇺🇸",
+  EUR: "Euro 🇪🇺",
+  GBP: "British Pound 🇬🇧",
+  JPY: "Japanese Yen 🇯🇵",
+  CAD: "Canadian Dollar 🇨🇦",
+  AUD: "Australian Dollar 🇦🇺",
+  INR: "Indian Rupee 🇮🇳",
+  CNY: "Chinese Yuan 🇨🇳",
+  RUB: "Russian Ruble 🇷🇺",
+  NGN: "Nigerian Naira 🇳🇬",
+  LYD: "Libyan Dinar 🇱🇾",
+  ZAR: "South African Rand 🇿🇦",
+  BRL: "Brazilian Real 🇧🇷",
+  MXN: "Mexican Peso 🇲🇽",
+  TRY: "Turkish Lira 🇹🇷",
+  SAR: "Saudi Riyal 🇸🇦",
+  AED: "UAE Dirham 🇦🇪"
+};
+
+// Load currencies
 async function loadCurrencies() {
   const response = await fetch("https://api.exchangerate.host/latest");
   const data = await response.json();
@@ -57,14 +74,16 @@ async function loadCurrencies() {
   const toSelect = document.getElementById("toCurrency");
 
   currencies.forEach(currency => {
-    fromSelect.innerHTML += `<option value="${currency}">${currency}</option>`;
-    toSelect.innerHTML += `<option value="${currency}">${currency}</option>`;
+    const name = currencyNames[currency] || currency;
+    fromSelect.innerHTML += `<option value="${currency}">${name}</option>`;
+    toSelect.innerHTML += `<option value="${currency}">${name}</option>`;
   });
 
   fromSelect.value = "USD";
   toSelect.value = "EUR";
 }
 
+// Convert currency
 async function convertCurrency() {
   const amount = document.getElementById("amount").value;
   const fromCurrency = document.getElementById("fromCurrency").value;
