@@ -2,13 +2,22 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calculator App</title>
+  <title>Smart Calculator 💱</title>
   <link rel="stylesheet" href="index.css">
 </head>
 <body>
   <div class="calculator">
+    <!-- Top bar -->
+    <div class="top-bar">
+      <button id="currency-btn" onclick="toggleCurrency()">💱 Currency</button>
+      <button id="show-history" onclick="toggleHistory()">📜 History</button>
+      <button id="clear-history">🧹 Clear History</button>
+    </div>
+
+    <!-- Display -->
     <input type="text" id="display" disabled>
+
+    <!-- Buttons -->
     <div class="buttons">
       <button onclick="clearDisplay()">C</button>
       <button onclick="deleteLast()">DEL</button>
@@ -34,22 +43,21 @@
       <button onclick="appendValue('.')">.</button>
     </div>
 
-    <!-- Scrollable history list -->
-    <div class="history-container">
+    <!-- History -->
+    <div class="history-container" id="history-container">
       <h3>History</h3>
       <ul id="history"></ul>
-      <button id="clear-history">Clear History</button>
     </div>
-<div class="currency-container">
-  <h3>Currency Converter</h3>
-  <input type="number" id="amount" placeholder="Enter amount">
-  <select id="fromCurrency"></select>
-  <select id="toCurrency"></select>
-  <button onclick="convertCurrency()">Convert</button>
-  <p id="conversionResult"></p>
-</div>
-    <!-- Dark mode toggle -->
-    <button id="toggle-theme">Toggle Dark Mode</button>
+
+    <!-- Currency Converter -->
+    <div class="currency-container" id="currency-container">
+      <h3>Currency Converter</h3>
+      <input type="number" id="amount" placeholder="Enter amount">
+      <select id="fromCurrency"></select>
+      <select id="toCurrency"></select>
+      <button onclick="convertCurrency()">Convert</button>
+      <p id="conversionResult"></p>
+    </div>
   </div>
   <script src="index.js"></script>
 </body>
