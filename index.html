@@ -40,7 +40,14 @@
       <ul id="history"></ul>
       <button id="clear-history">Clear History</button>
     </div>
-
+<div class="currency-container">
+  <h3>Currency Converter</h3>
+  <input type="number" id="amount" placeholder="Enter amount">
+  <select id="fromCurrency"></select>
+  <select id="toCurrency"></select>
+  <button onclick="convertCurrency()">Convert</button>
+  <p id="conversionResult"></p>
+</div>
     <!-- Dark mode toggle -->
     <button id="toggle-theme">Toggle Dark Mode</button>
   </div>
